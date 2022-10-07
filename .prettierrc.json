@@ -1,0 +1,10 @@
+{
+  "extends": ["some-other-config-you-use", "prettier"],
+  "singleQuote": true,
+  "trailingComma": "es5",
+  "jsxSingleQuote": true,
+  "bracketSpacing": true,
+  "bracketSameLine": true,
+  "tabWidth": 4,
+  "useTabs": false
+}
