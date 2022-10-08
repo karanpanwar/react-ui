@@ -129,7 +129,7 @@ const Login = () => {
                                 label='Remember me'
                             />
                         </Grid>
-                        <Grid
+                        {/* <Grid
                             item
                             sx={{
                                 display: 'inline-flex',
@@ -138,7 +138,7 @@ const Login = () => {
                             <Link href='#' underline='none' align='center'>
                                 Forgot password?
                             </Link>
-                        </Grid>
+                        </Grid> */}
                     </Grid>
                     <Button
                         type='submit'
@@ -147,7 +147,7 @@ const Login = () => {
                         sx={{ mt: 2, mb: 2 }}>
                         Sign In
                     </Button>
-                    <Typography>
+                    {/* <Typography>
                         Don&apos;t have an account?{' '}
                         <Link
                             variant='body1'
@@ -155,7 +155,7 @@ const Login = () => {
                             underline='none'>
                             Register
                         </Link>
-                    </Typography>
+                    </Typography> */}
                 </Box>
             </Box>
         </Container>

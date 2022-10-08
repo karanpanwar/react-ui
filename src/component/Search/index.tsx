@@ -7,7 +7,7 @@ const Search = () => {
     return (
         <Paper
             variant='outlined'
-            sx={{ p: '0 4px', alignSelf: 'center', height: 'fit-content' }}>
+            sx={{ p: '0 5px', alignSelf: 'center', height: 'fit-content' }}>
             <InputBase
                 sx={{ ml: 1, flex: 1 }}
                 placeholder='Search'
