@@ -71,8 +71,7 @@ export const login =
                 };
                 dispatch(loginSuccess(data));
             } else {
-                console.log('error', response);
-                dispatch(loginFail(response.message));
+                dispatch(loginFail(response.error));
             }
         } catch (err) {
             dispatch(loginFail(err.message));

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { Navigate, useLocation } from 'react-router-dom';
@@ -16,6 +16,8 @@ import {
     Link,
     TextField,
     Typography,
+    Snackbar,
+    Alert,
 } from '@mui/material';
 
 import { useAppDispatch, useAppSelector } from 'src/hooks/hooks';
@@ -32,6 +34,8 @@ const schema = yup.object({
 });
 
 const Login = () => {
+    const [error, showError] = useState(false);
+    const [message, setMessage] = useState('');
     // router
     // const location = useLocation();
     // const state = location.state as { from: Location };
@@ -50,6 +54,7 @@ const Login = () => {
     });
 
     const onSubmit: SubmitHandler<ILoginFormInput> = ({ email, password }) => {
+        setMessage('');
         dispatch(login({ email, password }));
     };
 
@@ -58,15 +63,39 @@ const Login = () => {
         return <Navigate to={'/'} replace />;
     }
 
+    useEffect( () => {
+        if(auth.error) {
+            showError(true);
+            setMessage(`${auth.error}`);
+        }   
+        console.log("useEffect", auth);
+        }, [auth.error, message])
     return (
         <Container component='main' maxWidth='xs'>
+            <Snackbar open={error}
+                    autoHideDuration={6000}
+                    onClose={()=> {
+                        showError(false)
+                    }}
+                    anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                    >
+                <Alert
+                    onClose={()=> {
+                        showError(false)
+                    }}
+                    severity='error'
+                    sx={{ width: '100%' }}>
+                    {message}
+                </Alert>
+            </Snackbar>
+
             <Box
                 sx={{
                     marginTop: 8,
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
-                }}>
+                }} >
                 <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                     <LockOutlinedIcon />
                 </Avatar>

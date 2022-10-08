@@ -23,7 +23,7 @@ const login = async (email: string, password: string) => {
           console.log("Api result", result);
           return result;
       }).catch((error)=> {
-        console.error('error found', error);
+        return error.response.data;
       })
     console.log("User", user);
     return user;  
