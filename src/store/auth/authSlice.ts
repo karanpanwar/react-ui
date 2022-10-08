@@ -61,7 +61,6 @@ export const login =
     async (dispatch: AppDispatch) => {
         try {
             const response: any = await AuthService.login(email, password);
-            console.log('response in Auth Slice==>', response);
             if (response && response.status === 200 && response.data.success) {
                 const data: User = {
                     id: '1',

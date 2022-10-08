@@ -20,16 +20,11 @@ const users = [
 const login = async (email: string, password: string) => {
     const user = await api.post('/admin/login', {email, password})
       .then((result)=> {
-          console.log("Api result", result);
           return result;
       }).catch((error)=> {
         return error.response.data;
       })
-    console.log("User", user);
     return user;  
-    // if(user) {
-      
-    // }
 }
 // const login = (email: string, password: string) => {
 //   return new Promise((resolve, reject) => {

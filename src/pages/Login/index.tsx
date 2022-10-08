@@ -36,10 +36,7 @@ const schema = yup.object({
 const Login = () => {
     const [error, showError] = useState(false);
     const [message, setMessage] = useState('');
-    // router
-    // const location = useLocation();
-    // const state = location.state as { from: Location };
-
+  
     // redux store
     const dispatch = useAppDispatch();
     const auth = useAppSelector(selectAuth);
@@ -49,7 +46,6 @@ const Login = () => {
             showError(true);
             setMessage(`${auth.error}`);
         }   
-        console.log("useEffect", auth);
         }, [auth.error, message]
     );
 
@@ -72,9 +68,6 @@ const Login = () => {
         // const origin = state?.from?.pathname || '/';
         return <Navigate to={'/'} replace />;
     }
-
-    
-
 
 
     return (
