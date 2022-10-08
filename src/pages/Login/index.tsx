@@ -44,6 +44,16 @@ const Login = () => {
     const dispatch = useAppDispatch();
     const auth = useAppSelector(selectAuth);
 
+    useEffect( () => {
+        if(auth.error) {
+            showError(true);
+            setMessage(`${auth.error}`);
+        }   
+        console.log("useEffect", auth);
+        }, [auth.error, message]
+    );
+
+
     // form
     const {
         control,
@@ -63,13 +73,10 @@ const Login = () => {
         return <Navigate to={'/'} replace />;
     }
 
-    useEffect( () => {
-        if(auth.error) {
-            showError(true);
-            setMessage(`${auth.error}`);
-        }   
-        console.log("useEffect", auth);
-        }, [auth.error, message])
+    
+
+
+
     return (
         <Container component='main' maxWidth='xs'>
             <Snackbar open={error}
