@@ -39,7 +39,7 @@ const Login = () => {
   
     // redux store
     const dispatch = useAppDispatch();
-    const auth = useAppSelector(selectAuth);
+    const auth: any  = useAppSelector(selectAuth);
 
     useEffect( () => {
         if(auth.error) {
@@ -73,7 +73,7 @@ const Login = () => {
     return (
         <Container component='main' maxWidth='xs'>
             <Snackbar open={error}
-                    autoHideDuration={6000}
+                    autoHideDuration={3000}
                     onClose={()=> {
                         showError(false)
                     }}

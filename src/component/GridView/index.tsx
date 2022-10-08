@@ -10,19 +10,33 @@ import {
     Paper,
 } from '@mui/material';
 
-function createData(
-    name: string,
-    MobileNo: number,
-    Product: string,
-    Company: string,
-    Problem: string
-) 
-{
-    return { name, MobileNo, Product, Company, Problem };
-}
+interface IrowData{
+    name: string;
+    MobileNo: number;
+    Product: string;
+    Company: string;
+    Problem: string;
+} 
+// {
+//     return { name, MobileNo, Product, Company, Problem };
+// }
 
-const rows = [
-    createData('Surendra', 9694292587, 'laptop', 'dell', 'hardware'),
+const rows: IrowData[] = [
+    {
+        name: 'Surendra',
+        MobileNo:  9694292587,
+        Product: 'laptop',
+        Company: 'dell',
+        Problem: 'hardware',
+    }, 
+    {
+        name: 'Surendra',
+        MobileNo:  9694292587,
+        Product: 'laptop',
+        Company: 'dell',
+        Problem: 'hardware',
+    }
+    
 ];
 
 const GridView = () => {
