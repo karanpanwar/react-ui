@@ -7,7 +7,9 @@ const getPresignedPostData = async (selectedFile: File) => {
 
     try {
         const response: AxiosResponse = await axios.get(url, {
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json'
+            },
             params: { fileName: name, operation: 'caseAttachments' },
         });
         return response.data;
@@ -17,7 +19,7 @@ const getPresignedPostData = async (selectedFile: File) => {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const uploadFileToS3 = async (presignedPostData: any, file: File, onUploadProgress: (progressEvent: any) => void ) => {
+const uploadFileToS3 = async (presignedPostData: any, file: File, onUploadProgress: (progressEvent: any) => void) => {
     const formData = new FormData();
     for (const [key, value] of presignedPostData.requestBodyparams) {
         formData.append(key, value);

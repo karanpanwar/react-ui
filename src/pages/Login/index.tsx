@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { Navigate, useLocation } from 'react-router-dom';
@@ -16,6 +16,8 @@ import {
     Link,
     TextField,
     Typography,
+    Snackbar,
+    Alert,
 } from '@mui/material';
 
 import { useAppDispatch, useAppSelector } from 'src/hooks/hooks';
@@ -32,13 +34,21 @@ const schema = yup.object({
 });
 
 const Login = () => {
-    // router
-    // const location = useLocation();
-    // const state = location.state as { from: Location };
-
+    const [error, showError] = useState(false);
+    const [message, setMessage] = useState('');
+  
     // redux store
     const dispatch = useAppDispatch();
-    const auth = useAppSelector(selectAuth);
+    const auth: any  = useAppSelector(selectAuth);
+
+    useEffect( () => {
+        if(auth.error) {
+            showError(true);
+            setMessage(`${auth.error}`);
+        }   
+        }, [auth.error, message]
+    );
+
 
     // form
     const {
@@ -50,6 +60,7 @@ const Login = () => {
     });
 
     const onSubmit: SubmitHandler<ILoginFormInput> = ({ email, password }) => {
+        setMessage('');
         dispatch(login({ email, password }));
     };
 
@@ -58,15 +69,33 @@ const Login = () => {
         return <Navigate to={'/'} replace />;
     }
 
+
     return (
         <Container component='main' maxWidth='xs'>
+            <Snackbar open={error}
+                    autoHideDuration={3000}
+                    onClose={()=> {
+                        showError(false)
+                    }}
+                    anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                    >
+                <Alert
+                    onClose={()=> {
+                        showError(false)
+                    }}
+                    severity='error'
+                    sx={{ width: '100%' }}>
+                    {message}
+                </Alert>
+            </Snackbar>
+
             <Box
                 sx={{
                     marginTop: 8,
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
-                }}>
+                }} >
                 <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                     <LockOutlinedIcon />
                 </Avatar>
@@ -129,7 +158,7 @@ const Login = () => {
                                 label='Remember me'
                             />
                         </Grid>
-                        <Grid
+                        {/* <Grid
                             item
                             sx={{
                                 display: 'inline-flex',
@@ -138,7 +167,7 @@ const Login = () => {
                             <Link href='#' underline='none' align='center'>
                                 Forgot password?
                             </Link>
-                        </Grid>
+                        </Grid> */}
                     </Grid>
                     <Button
                         type='submit'
@@ -147,7 +176,7 @@ const Login = () => {
                         sx={{ mt: 2, mb: 2 }}>
                         Sign In
                     </Button>
-                    <Typography>
+                    {/* <Typography>
                         Don&apos;t have an account?{' '}
                         <Link
                             variant='body1'
@@ -155,7 +184,7 @@ const Login = () => {
                             underline='none'>
                             Register
                         </Link>
-                    </Typography>
+                    </Typography> */}
                 </Box>
             </Box>
         </Container>

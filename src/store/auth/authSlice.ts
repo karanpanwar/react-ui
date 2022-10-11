@@ -61,17 +61,16 @@ export const login =
     async (dispatch: AppDispatch) => {
         try {
             const response: any = await AuthService.login(email, password);
-            if (response && response.message === 'success') {
-                const data = {
-                    id: response.data.Id,
-                    name: response.data.Name,
-                    email: response.data.Email,
-                    token: response.data.Token,
+            if (response && response.status === 200 && response.data.success) {
+                const data: User = {
+                    id: '1',
+                    name: 'Praveen Patel',
+                    email,
+                    token: response.data.token,
                 };
                 dispatch(loginSuccess(data));
             } else {
-                console.log('error', response);
-                dispatch(loginFail(response.message));
+                dispatch(loginFail(response.error));
             }
         } catch (err) {
             dispatch(loginFail(err.message));
