@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import { Link, LinkProps } from 'react-router-dom';
 
-import {List, ListItem, ListItemButton, ListItemIcon, ListItemText} from '@mui/material';
+import {Collapse, List, ListItem, ListItemButton, ListItemIcon, ListItemText} from '@mui/material';
+
 import AccountTreeOutlinedIcon from '@mui/icons-material/AccountTreeOutlined';
 import AssessmentOutlinedIcon from '@mui/icons-material/AssessmentOutlined';
 import HouseIcon from '@mui/icons-material/House';
@@ -9,6 +10,8 @@ import PostAddIcon from '@mui/icons-material/PostAdd';
 import SettingsIcon from '@mui/icons-material/Settings';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
+import PeopleIcon from '@mui/icons-material/People';
+import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 
 interface Ichild {
     pathName: string;
@@ -35,17 +38,23 @@ const menuConfig: IMenuProps[] = [
         icon: <PostAddIcon />,
         child : [
             {
-                pathName: '/add',
-                label : 'Add new Service',
+                pathName: 'service/add',
+                label : 'Add New Service',
                 icon: <PostAddIcon />,
             }
         ],
     },
     {
-        pathName: '/product',
-        label: 'Product',
-        icon: <PostAddIcon />,
-        child:[],
+        pathName: '/customer',
+        label: 'Customer',
+        icon: <PeopleIcon />,
+        child:[
+            {
+                pathName: 'customer/add',
+                label : 'Add New Customer',
+                icon : <PersonAddAltIcon />,
+            }
+        ],
     },
     {
         pathName: '/setting',
@@ -68,18 +77,52 @@ const CustomLink = React.forwardRef<HTMLAnchorElement, LinkProps>(
 );
 
 const MenuList = () => {
-    const [ open, setOpen] = useState(false);
+    const [ open, setOpen] = useState(true);
+    const [selectedIndex, setSelectedIndex] = React.useState(0);
+
+    const handleListItemClick = ( index: number) => {
+        setSelectedIndex(index);
+        setOpen(!open);
+    };
+
     return (
         <List color='inherit'>
-            {menuConfig.map(({ label, pathName, icon, child }: IMenuProps) => {
+            {menuConfig.map(({ label, pathName, icon, child }: IMenuProps, index) => {
                 return (
                     <ListItem key={label} disablePadding>
-                        <ListItemButton component={CustomLink} to={pathName}>
+                        <ListItemButton
+                                component={CustomLink}
+                                to={pathName} 
+                                selected={selectedIndex === index}
+                                onClick={()=> {
+                                    handleListItemClick( index)
+                                }}>        
                             <ListItemIcon>{icon}</ListItemIcon>
                             <ListItemText primary={label} />
-                            {child.length}
-                            {open ? <ExpandLess /> : <ExpandMore />}
+                            {/* {open ? <ExpandLess /> : <ExpandMore />} */}
                         </ListItemButton>
+
+                        {/* {child.length > 0 ? 
+                                 
+                            <Collapse in={open} timeout="auto" unmountOnExit>
+                                <List component="div" disablePadding>
+
+                                {child.map(({ label, pathName, icon }, childIndex)=> {
+                                        return (
+                                    <ListItemButton key={label} sx={{ pl: 4 }} 
+                                        component={CustomLink}
+                                        to={pathName}>
+                                        <ListItemIcon>
+                                                {icon} 
+                                        </ListItemIcon>
+                                        <ListItemText primary={label} />
+                                    </ListItemButton>)
+                                }
+                                )}
+                                </List>
+                            </Collapse> 
+                            : ''
+                        } */}
                     </ListItem>
                 );
             })}
